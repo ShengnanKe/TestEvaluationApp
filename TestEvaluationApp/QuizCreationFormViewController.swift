@@ -11,6 +11,9 @@
  ● Each question must have at least two options and one correct answer.
  ● Upon submission, the data will be stored in a text file.
  
+ 
+ use collection view for the options for more flexiablelity
+ 
 */
 
 import UIKit
@@ -18,6 +21,18 @@ import UIKit
 class QuizCreationFormViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
     // form to enter questions, options, and the correct answer.
+    var questions: [[String: Any]] = [
+        [
+        "question" : "",
+        "options" : ["", ""],
+        "answer" : 0
+        ],
+        [
+        "question" : "",
+        "options" : ["", ""],
+        "answer" : 0
+        ]
+    ]
     
     @IBOutlet weak var QuizCreationTableView: UITableView!
     
@@ -59,19 +74,7 @@ class QuizCreationFormViewController: UIViewController, UITableViewDelegate, UIT
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "QuizQuestionCell", for: indexPath) as! QuizQuestionTableViewCell
-            if indexPath.row == 0 {
-                cell.questionLabel.text = "Question 1: "
-                cell.choiceOneButton.setTitle("Answer 1:", for: .normal)
-                cell.choiceTwoButton.setTitle("Answer 2:", for: .normal)
-            } else if {
-                cell.questionLabel.text = "Question 2: "
-                cell.choiceOneButton.setTitle("Answer 1:", for: .normal)
-                cell.choiceTwoButton.setTitle("Answer 2:", for: .normal)
-            } else{
-                cell.questionLabel.text = "Question 2: "
-                cell.choiceOneButton.setTitle("Answer 1:", for: .normal)
-                cell.choiceTwoButton.setTitle("Answer 2:", for: .normal)
-            }
+            return cell
             
         }
     }
