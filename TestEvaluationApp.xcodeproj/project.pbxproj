@@ -14,6 +14,8 @@
 		44B127422BE2105B00949A7A /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 44B127412BE2105B00949A7A /* Base */; };
 		44F1D02F2BE30EB7001354D1 /* QuizCreationFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F1D02E2BE30EB7001354D1 /* QuizCreationFormViewController.swift */; };
 		44F1D0312BE310A6001354D1 /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F1D0302BE310A6001354D1 /* DBManager.swift */; };
+		44F1D0332BE343EA001354D1 /* QuizTakingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F1D0322BE343EA001354D1 /* QuizTakingViewController.swift */; };
+		44F1D0352BE347AE001354D1 /* QuizQuestionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F1D0342BE347AE001354D1 /* QuizQuestionTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		44B127432BE2105B00949A7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		44F1D02E2BE30EB7001354D1 /* QuizCreationFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizCreationFormViewController.swift; sourceTree = "<group>"; };
 		44F1D0302BE310A6001354D1 /* DBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBManager.swift; sourceTree = "<group>"; };
+		44F1D0322BE343EA001354D1 /* QuizTakingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizTakingViewController.swift; sourceTree = "<group>"; };
+		44F1D0342BE347AE001354D1 /* QuizQuestionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizQuestionTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,7 +69,9 @@
 				44B127402BE2105B00949A7A /* LaunchScreen.storyboard */,
 				44B127432BE2105B00949A7A /* Info.plist */,
 				44F1D02E2BE30EB7001354D1 /* QuizCreationFormViewController.swift */,
+				44F1D0342BE347AE001354D1 /* QuizQuestionTableViewCell.swift */,
 				44F1D0302BE310A6001354D1 /* DBManager.swift */,
+				44F1D0322BE343EA001354D1 /* QuizTakingViewController.swift */,
 			);
 			path = TestEvaluationApp;
 			sourceTree = "<group>";
@@ -144,6 +150,8 @@
 				44B127362BE2105900949A7A /* AppDelegate.swift in Sources */,
 				44B127382BE2105900949A7A /* SceneDelegate.swift in Sources */,
 				44F1D02F2BE30EB7001354D1 /* QuizCreationFormViewController.swift in Sources */,
+				44F1D0332BE343EA001354D1 /* QuizTakingViewController.swift in Sources */,
+				44F1D0352BE347AE001354D1 /* QuizQuestionTableViewCell.swift in Sources */,
 				44F1D0312BE310A6001354D1 /* DBManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

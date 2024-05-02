@@ -15,15 +15,69 @@
 
 import UIKit
 
-class QuizCreationFormViewController: UIViewController {
+class QuizCreationFormViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
+    // form to enter questions, options, and the correct answer.
     
+    @IBOutlet weak var QuizCreationTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        QuizCreationTableView.delegate = self
+        QuizCreationTableView.dataSource = self
+        QuizCreationTableView.separatorColor = .clear
+        
         // Do any additional setup after loading the view.
     }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 4
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return 1
+        }
+        else if section == 1 { //
+            return 5
+        }
+        else {
+            return 1
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 0 {
+            return 100.0 // the button to navegate to page
+        } else if indexPath.section == 1{
+            return 200.0 // the textfield takes more space -> swiched format
+        }else {
+            return 100.0 // The height for all other cells
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "QuizQuestionCell", for: indexPath) as! QuizQuestionTableViewCell
+            if indexPath.row == 0 {
+                cell.questionLabel.text = "Question 1: "
+                cell.choiceOneButton.setTitle("Answer 1:", for: .normal)
+                cell.choiceTwoButton.setTitle("Answer 2:", for: .normal)
+            } else if {
+                cell.questionLabel.text = "Question 2: "
+                cell.choiceOneButton.setTitle("Answer 1:", for: .normal)
+                cell.choiceTwoButton.setTitle("Answer 2:", for: .normal)
+            } else{
+                cell.questionLabel.text = "Question 2: "
+                cell.choiceOneButton.setTitle("Answer 1:", for: .normal)
+                cell.choiceTwoButton.setTitle("Answer 2:", for: .normal)
+            }
+            
+        }
+    }
+    // var question: String
+//    var options: [String]
+//    var correctAnswer: Int
     
 
     /*

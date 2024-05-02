@@ -21,11 +21,11 @@
                                 <rect key="frame" x="0.0" y="134" width="393" height="718"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SignUpCell" rowHeight="119" id="wZI-gY-Nyd" customClass="SignUpTableViewCell" customModule="TestEvaluationApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="393" height="119"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="QuizQuestionCell" rowHeight="166" id="wZI-gY-Nyd" customClass="QuizQuestionTableViewCell" customModule="TestEvaluationApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="393" height="166"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wZI-gY-Nyd" id="9TV-be-cPn">
-                                            <rect key="frame" x="0.0" y="0.0" width="393" height="119"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="166"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pe3-uB-1cU">
@@ -34,24 +34,31 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="18U-DI-X2q">
-                                                    <rect key="frame" x="20" y="52.666666666666657" width="353" height="34"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GqN-Zf-J7c">
+                                                    <rect key="frame" x="110" y="54" width="172" height="35"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="filled" title="Button">
+                                                        <color key="baseBackgroundColor" red="0.57101103549999999" green="0.4040627175" blue="0.62898742050000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </buttonConfiguration>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qaw-t0-cf9">
+                                                    <rect key="frame" x="110" y="106" width="172" height="35"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="filled" title="Button">
+                                                        <color key="baseBackgroundColor" red="0.57101103549999999" green="0.4040627175" blue="0.62898742050000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </buttonConfiguration>
+                                                </button>
                                             </subviews>
                                             <color key="backgroundColor" red="0.62898742046552836" green="0.5097299246126018" blue="0.56723369469414286" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
-                                                <constraint firstItem="18U-DI-X2q" firstAttribute="leading" secondItem="9TV-be-cPn" secondAttribute="leadingMargin" id="Evp-Mw-wv8"/>
                                                 <constraint firstItem="pe3-uB-1cU" firstAttribute="top" secondItem="9TV-be-cPn" secondAttribute="topMargin" id="U0q-KG-kmQ"/>
-                                                <constraint firstItem="18U-DI-X2q" firstAttribute="top" secondItem="pe3-uB-1cU" secondAttribute="bottom" constant="20" id="ixA-2A-3U1"/>
                                                 <constraint firstItem="pe3-uB-1cU" firstAttribute="leading" secondItem="9TV-be-cPn" secondAttribute="leadingMargin" id="p2Y-56-uLi"/>
-                                                <constraint firstItem="18U-DI-X2q" firstAttribute="trailing" secondItem="9TV-be-cPn" secondAttribute="trailingMargin" id="rEU-jm-0SJ"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="testTakerLabel" destination="pe3-uB-1cU" id="vCa-Ht-e1c"/>
-                                            <outlet property="testTakerTextField" destination="18U-DI-X2q" id="kpd-2I-ahO"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
