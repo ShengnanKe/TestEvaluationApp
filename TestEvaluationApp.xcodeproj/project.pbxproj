@@ -7,17 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4417A0F62BE2159D002A0590 /* SignUpTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4417A0F52BE2159D002A0590 /* SignUpTableViewCell.swift */; };
 		44B127362BE2105900949A7A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B127352BE2105900949A7A /* AppDelegate.swift */; };
 		44B127382BE2105900949A7A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B127372BE2105900949A7A /* SceneDelegate.swift */; };
 		44B1273D2BE2105900949A7A /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 44B1273C2BE2105900949A7A /* Base */; };
 		44B1273F2BE2105B00949A7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 44B1273E2BE2105B00949A7A /* Assets.xcassets */; };
 		44B127422BE2105B00949A7A /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 44B127412BE2105B00949A7A /* Base */; };
-		44B1274A2BE210FC00949A7A /* TestSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B127492BE210FC00949A7A /* TestSignUpViewController.swift */; };
+		44F1D02F2BE30EB7001354D1 /* QuizCreationFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F1D02E2BE30EB7001354D1 /* QuizCreationFormViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4417A0F52BE2159D002A0590 /* SignUpTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpTableViewCell.swift; sourceTree = "<group>"; };
 		44B127322BE2105900949A7A /* TestEvaluationApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestEvaluationApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		44B127352BE2105900949A7A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		44B127372BE2105900949A7A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -25,7 +23,7 @@
 		44B1273E2BE2105B00949A7A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		44B127412BE2105B00949A7A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		44B127432BE2105B00949A7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		44B127492BE210FC00949A7A /* TestSignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestSignUpViewController.swift; sourceTree = "<group>"; };
+		44F1D02E2BE30EB7001354D1 /* QuizCreationFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizCreationFormViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,8 +62,7 @@
 				44B1273E2BE2105B00949A7A /* Assets.xcassets */,
 				44B127402BE2105B00949A7A /* LaunchScreen.storyboard */,
 				44B127432BE2105B00949A7A /* Info.plist */,
-				44B127492BE210FC00949A7A /* TestSignUpViewController.swift */,
-				4417A0F52BE2159D002A0590 /* SignUpTableViewCell.swift */,
+				44F1D02E2BE30EB7001354D1 /* QuizCreationFormViewController.swift */,
 			);
 			path = TestEvaluationApp;
 			sourceTree = "<group>";
@@ -142,9 +139,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				44B127362BE2105900949A7A /* AppDelegate.swift in Sources */,
-				4417A0F62BE2159D002A0590 /* SignUpTableViewCell.swift in Sources */,
-				44B1274A2BE210FC00949A7A /* TestSignUpViewController.swift in Sources */,
 				44B127382BE2105900949A7A /* SceneDelegate.swift in Sources */,
+				44F1D02F2BE30EB7001354D1 /* QuizCreationFormViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
