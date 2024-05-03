@@ -9,12 +9,12 @@ import UIKit
 
 class SubmitQuizTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var sumbitButton: UIButton!
+    @IBOutlet weak var submitButton: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        submitButton.setTitle("Submit Quiz", for: .normal)
+        submitButton.setTitle("Submit Question", for: .normal)
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

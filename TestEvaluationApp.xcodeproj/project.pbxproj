@@ -17,6 +17,9 @@
 		44F1D0392BE42FB0001354D1 /* QuizQuestionCreationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F1D0382BE42FB0001354D1 /* QuizQuestionCreationTableViewCell.swift */; };
 		44F1D03B2BE43117001354D1 /* SubmitQuizTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F1D03A2BE43117001354D1 /* SubmitQuizTableViewCell.swift */; };
 		44F1D03D2BE441D5001354D1 /* CustomFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F1D03C2BE441D5001354D1 /* CustomFileManager.swift */; };
+		44F1D03F2BE4C3D7001354D1 /* ShowQuestionListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F1D03E2BE4C3D7001354D1 /* ShowQuestionListTableViewCell.swift */; };
+		44F1D0412BE4C4D3001354D1 /* QuestionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F1D0402BE4C4D3001354D1 /* QuestionListViewController.swift */; };
+		44F1D0432BE4C635001354D1 /* QuestionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F1D0422BE4C635001354D1 /* QuestionCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,7 +34,10 @@
 		44F1D0322BE343EA001354D1 /* QuizTakingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizTakingViewController.swift; sourceTree = "<group>"; };
 		44F1D0382BE42FB0001354D1 /* QuizQuestionCreationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizQuestionCreationTableViewCell.swift; sourceTree = "<group>"; };
 		44F1D03A2BE43117001354D1 /* SubmitQuizTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitQuizTableViewCell.swift; sourceTree = "<group>"; };
-		44F1D03C2BE441D5001354D1 /* CustomFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CustomFileManager.swift; path = TestEvaluationApp/CustomFileManager.swift; sourceTree = "<group>"; };
+		44F1D03C2BE441D5001354D1 /* CustomFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFileManager.swift; sourceTree = "<group>"; };
+		44F1D03E2BE4C3D7001354D1 /* ShowQuestionListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowQuestionListTableViewCell.swift; sourceTree = "<group>"; };
+		44F1D0402BE4C4D3001354D1 /* QuestionListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionListViewController.swift; sourceTree = "<group>"; };
+		44F1D0422BE4C635001354D1 /* QuestionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,7 +54,6 @@
 		44B127292BE2105900949A7A = {
 			isa = PBXGroup;
 			children = (
-				44F1D03C2BE441D5001354D1 /* CustomFileManager.swift */,
 				44B127342BE2105900949A7A /* TestEvaluationApp */,
 				44B127332BE2105900949A7A /* Products */,
 			);
@@ -71,9 +76,13 @@
 				44B1273E2BE2105B00949A7A /* Assets.xcassets */,
 				44B127402BE2105B00949A7A /* LaunchScreen.storyboard */,
 				44B127432BE2105B00949A7A /* Info.plist */,
+				44F1D03C2BE441D5001354D1 /* CustomFileManager.swift */,
 				44F1D02E2BE30EB7001354D1 /* QuizCreationFormViewController.swift */,
 				44F1D0382BE42FB0001354D1 /* QuizQuestionCreationTableViewCell.swift */,
 				44F1D03A2BE43117001354D1 /* SubmitQuizTableViewCell.swift */,
+				44F1D03E2BE4C3D7001354D1 /* ShowQuestionListTableViewCell.swift */,
+				44F1D0402BE4C4D3001354D1 /* QuestionListViewController.swift */,
+				44F1D0422BE4C635001354D1 /* QuestionCollectionViewCell.swift */,
 				44F1D0322BE343EA001354D1 /* QuizTakingViewController.swift */,
 			);
 			path = TestEvaluationApp;
@@ -150,12 +159,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44F1D0432BE4C635001354D1 /* QuestionCollectionViewCell.swift in Sources */,
 				44B127362BE2105900949A7A /* AppDelegate.swift in Sources */,
 				44B127382BE2105900949A7A /* SceneDelegate.swift in Sources */,
+				44F1D0412BE4C4D3001354D1 /* QuestionListViewController.swift in Sources */,
 				44F1D03D2BE441D5001354D1 /* CustomFileManager.swift in Sources */,
 				44F1D02F2BE30EB7001354D1 /* QuizCreationFormViewController.swift in Sources */,
 				44F1D03B2BE43117001354D1 /* SubmitQuizTableViewCell.swift in Sources */,
 				44F1D0332BE343EA001354D1 /* QuizTakingViewController.swift in Sources */,
+				44F1D03F2BE4C3D7001354D1 /* ShowQuestionListTableViewCell.swift in Sources */,
 				44F1D0392BE42FB0001354D1 /* QuizQuestionCreationTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

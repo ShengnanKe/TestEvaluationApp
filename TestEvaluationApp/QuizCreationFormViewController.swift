@@ -14,6 +14,9 @@
  
  use collection view for the options for more flexiablelity
  
+ 
+ view.endEditing(true) -> for last entry to be saved
+ 
  */
 
 import UIKit
@@ -40,11 +43,13 @@ class QuizCreationFormViewController: UIViewController, UITableViewDelegate, UIT
         quizCreationTableView.dataSource = self
         quizCreationTableView.separatorColor = .clear
         
+        quizCreationTitleLabel.text = "Quiz Questions Creation Form"
+        
         // Do any additional setup after loading the view.
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -65,35 +70,70 @@ class QuizCreationFormViewController: UIViewController, UITableViewDelegate, UIT
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
+        if indexPath.section == 0 { // questions, options(textfield) / answer (SegmentedControl)
             let cell = tableView.dequeueReusableCell(withIdentifier: "QuizQuestionCreationCell", for: indexPath) as! QuizQuestionCreationTableViewCell
-            let questionsData = questions[indexPath.row]
-            cell.questionTextField.text = questionsData["question"] as? String ?? ""
-            cell.choice1TextField.text = (questionsData["options"] as? [String])?[0] ?? ""
-            cell.choice2TextField.text = (questionsData["options"] as? [String])?[1] ?? ""
-            cell.choice3TextField.text = (questionsData["options"] as? [String])?[0] ?? ""
-            cell.choice4TextField.text = (questionsData["options"] as? [String])?[1] ?? ""
-            let answerIndex = questionsData["answer"] as? Int ?? 0
-            cell.correctAnswerSegmentedControl.selectedSegmentIndex = answerIndex
+            let questionInfo = questions[indexPath.row]
+            cell.questionTextField.text = questionInfo["question"] as? String
+            let options = questionInfo["options"] as? [String] ?? ["", "", "", ""]
+            cell.choice1TextField.text = options[0]
+            cell.choice2TextField.text = options[1]
+            cell.choice3TextField.text = options[2]
+            cell.choice4TextField.text = options[3]
+            cell.correctAnswerSegmentedControl.selectedSegmentIndex = questionInfo["answer"] as? Int ?? -1
+            
+            cell.questionTextField.delegate = self
+            cell.choice1TextField.delegate = self
+            cell.choice2TextField.delegate = self
+            cell.choice3TextField.delegate = self
+            cell.choice4TextField.delegate = self
             cell.delegate = self
             return cell
         }
-        else{
+        else if indexPath.section == 1{ // Submit Question
             let cell = tableView.dequeueReusableCell(withIdentifier: "SubmitQuizCell", for: indexPath) as! SubmitQuizTableViewCell
             cell.submitAction = { [weak self] in
                 self?.saveQuestionsToFile()
             }
             return cell
         }
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 1 {
-            saveQuestionsToFile()
+        else{ // Show Question List
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ShowQuestionListCell", for: indexPath) as! ShowQuestionListTableViewCell
+            cell.showQuestionListAction = { [weak self] in
+                self?.saveQuestionsToFile()
+            }
+            return cell
+            
         }
     }
     
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        guard let cell = textField.superview?.superview as? QuizQuestionCreationTableViewCell,
+              let indexPath = quizCreationTableView.indexPath(for: cell) else {
+            return
+        }
+        
+        if textField == cell.questionTextField {
+            questions[indexPath.row]["question"] = textField.text ?? ""
+        } else if textField == cell.choice1TextField {
+            updateOption(forRow: indexPath.row, optionIndex: 0, text: textField.text)
+        } else if textField == cell.choice2TextField {
+            updateOption(forRow: indexPath.row, optionIndex: 1, text: textField.text)
+        } else if textField == cell.choice3TextField {
+            updateOption(forRow: indexPath.row, optionIndex: 2, text: textField.text)
+        } else if textField == cell.choice4TextField {
+            updateOption(forRow: indexPath.row, optionIndex: 3, text: textField.text)
+        }
+    }
+    
+    func updateOption(forRow row: Int, optionIndex index: Int, text: String?) {
+        var options = questions[row]["options"] as? [String] ?? ["", "", "", ""]
+        options[index] = text ?? ""
+        questions[row]["options"] = options
+        print("Updated options for question \(row): \(options)") // Debugging line
+    }
+    
     func saveQuestionsToFile() {
+        print("Final questions before saving: \(questions)")
         let filePath = getDocumentsDirectory().appendingPathComponent("quizQuestionsData.txt")
         do {
             let data = try JSONSerialization.data(withJSONObject: questions, options: .prettyPrinted)
@@ -104,27 +144,46 @@ class QuizCreationFormViewController: UIViewController, UITableViewDelegate, UIT
         }
     }
     
+    
     func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
     }
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }
 
 extension QuizCreationFormViewController: QuizQuestionCreationCellDelegate {
+    
+    func textFieldDidEndEditing(_ textField: UITextField, in cell: QuizQuestionCreationTableViewCell) {
+        guard let indexPath = quizCreationTableView.indexPath(for: cell) else { return }
+        
+        // Check which textField is being edited and update the data model accordingly
+        switch textField {
+        case cell.questionTextField:
+            questions[indexPath.row]["question"] = textField.text // ?? ""
+        case cell.choice1TextField:
+            updateOption(forRow: indexPath.row, optionIndex: 0, text: textField.text)
+        case cell.choice2TextField:
+            updateOption(forRow: indexPath.row, optionIndex: 1, text: textField.text)
+        case cell.choice3TextField:
+            updateOption(forRow: indexPath.row, optionIndex: 2, text: textField.text)
+        case cell.choice4TextField:
+            updateOption(forRow: indexPath.row, optionIndex: 3, text: textField.text)
+        default:
+            break
+        }
+    }
+    
     func correctAnswerChanged(_ cell: QuizQuestionCreationTableViewCell, selectedAnswerIndex: Int) {
         guard let indexPath = quizCreationTableView.indexPath(for: cell) else { return }
         
         questions[indexPath.row]["answer"] = selectedAnswerIndex
     }
+    
+    func navigateToQuestionList() {
+        let questionListVC = QuestionListViewController()
+        questionListVC.questions = self.questions  // Pass questions to QLVC
+        self.navigationController?.pushViewController(questionListVC, animated: true)
+    }
+    
 }

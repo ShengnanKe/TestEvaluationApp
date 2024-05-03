@@ -9,9 +9,11 @@ import UIKit
 
 protocol QuizQuestionCreationCellDelegate: AnyObject {
     func correctAnswerChanged(_ cell: QuizQuestionCreationTableViewCell, selectedAnswerIndex: Int)
+    func textFieldDidEndEditing(_ textField: UITextField, in cell: QuizQuestionCreationTableViewCell)
 }
 
-class QuizQuestionCreationTableViewCell: UITableViewCell, UITextFieldDelegate {
+
+class QuizQuestionCreationTableViewCell: UITableViewCell {
     
     @IBOutlet weak var questionTextField: UITextField!
     @IBOutlet weak var choice1TextField: UITextField!
@@ -25,20 +27,13 @@ class QuizQuestionCreationTableViewCell: UITableViewCell, UITextFieldDelegate {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        
-        questionTextField.delegate = self
-        choice1TextField.delegate = self
-        choice2TextField.delegate = self
-        choice3TextField.delegate = self
-        choice4TextField.delegate = self
-        
         questionTextField.placeholder = "Enter question here: "
         choice1TextField.placeholder = "Enter choice 1 here: "
         choice2TextField.placeholder = "Enter choice 2 here: "
         choice3TextField.placeholder = "Enter choice 3 here: "
         choice4TextField.placeholder = "Enter choice 4 here: "
         correctAnswerSegmentedControl.removeAllSegments()
-        for i in 0..<4 { // Assuming 4 choices
+        for i in 0..<4 { 
             correctAnswerSegmentedControl.insertSegment(withTitle: String(i+1), at: i, animated: false)
         }
         correctAnswerSegmentedControl.addTarget(self, action: #selector(correctAnswerChanged(_:)), for: .valueChanged)
@@ -48,12 +43,6 @@ class QuizQuestionCreationTableViewCell: UITableViewCell, UITextFieldDelegate {
     @objc func correctAnswerChanged(_ sender: UISegmentedControl) {
         // Call the delegate method when a segment is selected
         delegate?.correctAnswerChanged(self, selectedAnswerIndex: sender.selectedSegmentIndex)
-    }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
     }
     
 }
