@@ -72,7 +72,6 @@
 			children = (
 				44B127352BE2105900949A7A /* AppDelegate.swift */,
 				44B127372BE2105900949A7A /* SceneDelegate.swift */,
-				44B1273B2BE2105900949A7A /* Main.storyboard */,
 				44B1273E2BE2105B00949A7A /* Assets.xcassets */,
 				44B127402BE2105B00949A7A /* LaunchScreen.storyboard */,
 				44B127432BE2105B00949A7A /* Info.plist */,
@@ -81,6 +80,7 @@
 				44F1D0382BE42FB0001354D1 /* QuizQuestionCreationTableViewCell.swift */,
 				44F1D03A2BE43117001354D1 /* SubmitQuizTableViewCell.swift */,
 				44F1D03E2BE4C3D7001354D1 /* ShowQuestionListTableViewCell.swift */,
+				44B1273B2BE2105900949A7A /* Main.storyboard */,
 				44F1D0402BE4C4D3001354D1 /* QuestionListViewController.swift */,
 				44F1D0422BE4C635001354D1 /* QuestionCollectionViewCell.swift */,
 				44F1D0322BE343EA001354D1 /* QuizTakingViewController.swift */,

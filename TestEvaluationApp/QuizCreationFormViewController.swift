@@ -19,6 +19,9 @@
  
  */
 
+// UIStackView
+
+
 import UIKit
 
 class QuizCreationFormViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
@@ -89,14 +92,14 @@ class QuizCreationFormViewController: UIViewController, UITableViewDelegate, UIT
             cell.delegate = self
             return cell
         }
-        else if indexPath.section == 1{ // Submit Question
+        else if indexPath.section == 1{ // Submit Question button
             let cell = tableView.dequeueReusableCell(withIdentifier: "SubmitQuizCell", for: indexPath) as! SubmitQuizTableViewCell
             cell.submitAction = { [weak self] in
                 self?.saveQuestionsToFile()
             }
             return cell
         }
-        else{ // Show Question List
+        else{ // Show Question List button
             let cell = tableView.dequeueReusableCell(withIdentifier: "ShowQuestionListCell", for: indexPath) as! ShowQuestionListTableViewCell
             cell.showQuestionListAction = { [weak self] in
                 self?.saveQuestionsToFile()
@@ -129,8 +132,18 @@ class QuizCreationFormViewController: UIViewController, UITableViewDelegate, UIT
         var options = questions[row]["options"] as? [String] ?? ["", "", "", ""]
         options[index] = text ?? ""
         questions[row]["options"] = options
-        print("Updated options for question \(row): \(options)") // Debugging line
+        print("Updated options for question \(row): \(options)")
     }
+    
+    @objc func addQuestion() {
+        let newQuestion = [
+            "question": "",
+            "options": ["", "", "", ""],
+            "answer": 0
+        ] as [String : Any]
+        questions.append(newQuestion)
+        quizCreationTableView.insertRows(at: [IndexPath(row: questions.count - 1, section: 0)], with: .automatic)
+    } // need to do tableView.reloadData() // need give flexibablity for how many options that they need, save table and refresh it, black it. reload the textfield. add it the page go down, add question, attemp quiz, history
     
     func saveQuestionsToFile() {
         print("Final questions before saving: \(questions)")
