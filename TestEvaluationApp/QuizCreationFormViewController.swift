@@ -67,8 +67,8 @@ class QuizCreationFormViewController: UIViewController, UITableViewDelegate, UIT
             let options = question["options"] as? [String] ?? []
             return 180.0 + CGFloat(options.count * 40) // adjust the tableviewcell size according to how many options there are
         } 
-        else if indexPath.section == 0 {
-            return 200 // has 2 buttons
+        else if indexPath.section == 1 {
+            return 150 // has 2 buttons
         }
         else {
             return 80.0
