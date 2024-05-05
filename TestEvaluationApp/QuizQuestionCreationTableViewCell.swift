@@ -12,9 +12,10 @@ protocol QuizQuestionCreationCellDelegate: AnyObject {
     func textFieldDidEndEditing(_ textField: UITextField, in cell: QuizQuestionCreationTableViewCell)
     func addOptionPressed(in cell: QuizQuestionCreationTableViewCell)
     func removeOptionPressed(in cell: QuizQuestionCreationTableViewCell)
+    
 }
 
-class QuizQuestionCreationTableViewCell: UITableViewCell {
+class QuizQuestionCreationTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     @IBOutlet weak var questionTextField: UITextField!
     @IBOutlet weak var optionsStackView: UIStackView!
@@ -29,7 +30,10 @@ class QuizQuestionCreationTableViewCell: UITableViewCell {
         questionTextField.placeholder = "Enter question here: "
         addButton.setTitle("Add Option", for: .normal)
         removeButton.setTitle("Remove Option", for: .normal)
+        
+        questionTextField.delegate = self
         setupInitialOptions()
+        correctAnswerSegmentedControl.addTarget(self, action: #selector(correctAnswerChanged(_:)), for: .valueChanged)
     }
     
     @IBAction func addOptionPressed(_ sender: UIButton) {
@@ -72,7 +76,8 @@ class QuizQuestionCreationTableViewCell: UITableViewCell {
         let optionTextField = UITextField()
         optionTextField.placeholder = "Enter option here"
         optionTextField.borderStyle = .roundedRect
-        optionTextField.text = text  // ensure this line is using the parameter `text`
+        optionTextField.text = text
+        optionTextField.delegate = self
         optionsStackView.addArrangedSubview(optionTextField)
         
         correctAnswerSegmentedControl.insertSegment(withTitle: String(optionsStackView.arrangedSubviews.count), at: optionsStackView.arrangedSubviews.count - 1, animated: true)
@@ -90,9 +95,21 @@ class QuizQuestionCreationTableViewCell: UITableViewCell {
     }
     
     @objc func correctAnswerChanged(_ sender: UISegmentedControl) {
-        // Call the delegate method when a segment is selected
         delegate?.correctAnswerChanged(self, selectedAnswerIndex: sender.selectedSegmentIndex)
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        questionTextField.text = nil
+        clearOptions()
+        correctAnswerSegmentedControl.selectedSegmentIndex = UISegmentedControl.noSegment
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        //super.textFieldDidEndEditing(textField)
+        delegate?.textFieldDidEndEditing(textField, in: self)
+    }
+
+
 }
 
