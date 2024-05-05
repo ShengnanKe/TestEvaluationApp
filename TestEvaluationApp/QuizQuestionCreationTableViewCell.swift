@@ -7,12 +7,11 @@
 
 import UIKit
 
-protocol QuizQuestionCreationCellDelegate: AnyObject {
+protocol QuizQuestionCreationCellDelegate: AnyObject { //declare delegate
     func correctAnswerChanged(_ cell: QuizQuestionCreationTableViewCell, selectedAnswerIndex: Int)
     func textFieldDidEndEditing(_ textField: UITextField, in cell: QuizQuestionCreationTableViewCell)
     func addOptionPressed(in cell: QuizQuestionCreationTableViewCell)
     func removeOptionPressed(in cell: QuizQuestionCreationTableViewCell)
-    
 }
 
 class QuizQuestionCreationTableViewCell: UITableViewCell, UITextFieldDelegate {
@@ -72,12 +71,13 @@ class QuizQuestionCreationTableViewCell: UITableViewCell, UITextFieldDelegate {
         correctAnswerSegmentedControl.selectedSegmentIndex = answerIndex
     }
     
-    func addOptionField(withText text: String) {
+    func addOptionField(withText text: String = "New Option") {
         let optionTextField = UITextField()
         optionTextField.placeholder = "Enter option here"
         optionTextField.borderStyle = .roundedRect
         optionTextField.text = text
         optionTextField.delegate = self
+//        optionTextField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
         optionsStackView.addArrangedSubview(optionTextField)
         
         correctAnswerSegmentedControl.insertSegment(withTitle: String(optionsStackView.arrangedSubviews.count), at: optionsStackView.arrangedSubviews.count - 1, animated: true)
@@ -85,12 +85,18 @@ class QuizQuestionCreationTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
     
     func removeOptionField() {
-        if optionsStackView.arrangedSubviews.count > 2 { // Ensure a minimum of two options
+        if optionsStackView.arrangedSubviews.count > 2 { // minimum of two options
             if let lastView = optionsStackView.arrangedSubviews.last {
                 optionsStackView.removeArrangedSubview(lastView)
                 lastView.removeFromSuperview()
                 correctAnswerSegmentedControl.removeSegment(at: optionsStackView.arrangedSubviews.count, animated: true)
             }
+//            let indexToRemove = optionsStackView.arrangedSubviews.count - 1
+//            optionsStackView.arrangedSubviews.last?.removeFromSuperview()
+//            correctAnswerSegmentedControl.removeSegment(at: indexToRemove, animated: true)
+//            if correctAnswerSegmentedControl.selectedSegmentIndex >= indexToRemove {
+//                correctAnswerSegmentedControl.selectedSegmentIndex = correctAnswerSegmentedControl.numberOfSegments - 1
+//            }
         }
     }
     
@@ -106,7 +112,6 @@ class QuizQuestionCreationTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        //super.textFieldDidEndEditing(textField)
         delegate?.textFieldDidEndEditing(textField, in: self)
     }
 

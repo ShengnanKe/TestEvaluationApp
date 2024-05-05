@@ -45,6 +45,7 @@ class QuizCreationFormViewController: UIViewController, UITableViewDelegate, UIT
         quizCreationTableView.separatorColor = .clear
         
         quizCreationTitleLabel.text = "Quiz Questions Creation Form"
+        quizCreationTableView.register(UINib(nibName: "SubmitQuestionTableViewCell", bundle: nil), forCellReuseIdentifier: "SubmitQuestionCell")
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -64,9 +65,13 @@ class QuizCreationFormViewController: UIViewController, UITableViewDelegate, UIT
         if indexPath.section == 0 { // swiched format
             let question = questions[indexPath.row]
             let options = question["options"] as? [String] ?? []
-            return 170.0 + CGFloat(options.count * 40) // adjust the tableviewcell size according to how many options there are
-        } else {
-            return 100.0 // the button to navegate to page & The height for all other cells
+            return 180.0 + CGFloat(options.count * 40) // adjust the tableviewcell size according to how many options there are
+        } 
+        else if indexPath.section == 0 {
+            return 200 // has 2 buttons
+        }
+        else {
+            return 80.0
         }
     }
     
@@ -86,10 +91,12 @@ class QuizCreationFormViewController: UIViewController, UITableViewDelegate, UIT
             return cell
         }
         else if indexPath.section == 1{ // Submit Question button
-            let cell = tableView.dequeueReusableCell(withIdentifier: "SubmitQuizCell", for: indexPath) as! SubmitQuizTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "SubmitQuestionCell", for: indexPath) as! SubmitQuestionTableViewCell
+            cell.delegate = self
             cell.submitAction = { [weak self] in
                 self?.saveQuestionsToFile()
             }
+            
             return cell
         }
         else{ // Show Question List button
@@ -99,6 +106,7 @@ class QuizCreationFormViewController: UIViewController, UITableViewDelegate, UIT
             }
             return cell
         }
+        
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -142,8 +150,10 @@ class QuizCreationFormViewController: UIViewController, UITableViewDelegate, UIT
             "options": [],
             "answer": -1    // -1 -> no selected answer initially
         ] as [String : Any]
+        view.endEditing(true)
         questions.append(newQuestion)
         quizCreationTableView.insertRows(at: [IndexPath(row: questions.count - 1, section: 0)], with: .automatic)
+        
     } // need to do tableView.reloadData()
     // need give flexibablity for how many options that they need, save table and refresh it, black it. reload the textfield. add it the page go down, add question, attemp quiz, history
     
@@ -182,17 +192,14 @@ extension QuizCreationFormViewController: QuizQuestionCreationCellDelegate {
     func addOptionPressed(in cell: QuizQuestionCreationTableViewCell) {
         view.endEditing(true)
         guard let indexPath = quizCreationTableView.indexPath(for: cell) else { return }
-        
+        let currentOptions = cell.optionsStackView.arrangedSubviews.compactMap { ($0 as? UITextField)?.text }
         print("Options before adding new one: \(String(describing: questions[indexPath.row]["options"]))")
             
         var question = questions[indexPath.row]
-        let currentOptions = cell.optionsStackView.arrangedSubviews.compactMap { ($0 as? UITextField)?.text }
         question["options"] = currentOptions
-        
         var options = (question["options"] as? [String]) ?? []
         options.append("New Option")
         question["options"] = options
-        
         questions[indexPath.row] = question
         quizCreationTableView.reloadRows(at: [indexPath], with: .automatic)
 //        view.endEditing(true)
@@ -220,25 +227,15 @@ extension QuizCreationFormViewController: QuizQuestionCreationCellDelegate {
             return
         }
         var question = questions[indexPath.row]
-        question["answer"] = selectedAnswerIndex + 1
+        question["answer"] = selectedAnswerIndex //+ 1
         questions[indexPath.row] = question
     }
     
     func textFieldDidEndEditing(_ textField: UITextField, in cell: QuizQuestionCreationTableViewCell) {
-        //print("Editing ended for textField: \(textField.text ?? "")")
         guard let cell = textField.superview?.superview as? QuizQuestionCreationTableViewCell,
               let indexPath = quizCreationTableView.indexPath(for: cell) else {
             return
         }
-        //guard let indexPath = quizCreationTableView.indexPath(for: cell) else { return }
-//        var question = questions[indexPath.row]
-//        if textField == cell.questionTextField {
-//            question["question"] = textField.text ?? ""
-//        } else {
-//            let options = cell.optionsStackView.arrangedSubviews.compactMap { ($0 as? UITextField)?.text }
-//            question["options"] = options
-//        }
-        
         let options = cell.optionsStackView.arrangedSubviews.compactMap { ($0 as? UITextField)?.text }
         var question = questions[indexPath.row]
         question["options"] = options

@@ -119,39 +119,54 @@
                                             <outlet property="removeButton" destination="vFu-gv-Jmx" id="MgE-Ts-1gr"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SubmitQuizCell" rowHeight="113" id="w3J-sy-cNX" customClass="SubmitQuizTableViewCell" customModule="TestEvaluationApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="279" width="393" height="113"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SubmitQuestionCell" rowHeight="140" id="6pk-xV-G4H" customClass="SubmitQuestionTableViewCell" customModule="TestEvaluationApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="279" width="393" height="140"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="w3J-sy-cNX" id="TC0-w7-nuh">
-                                            <rect key="frame" x="0.0" y="0.0" width="393" height="113"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6pk-xV-G4H" id="E4J-D0-imJ">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="140"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eeC-ET-ntG">
-                                                    <rect key="frame" x="60" y="31" width="273" height="51"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u0x-rh-Cy8">
+                                                    <rect key="frame" x="55" y="21" width="283" height="35"/>
                                                     <state key="normal" title="Button"/>
                                                     <buttonConfiguration key="configuration" style="filled" title="Button">
-                                                        <color key="baseBackgroundColor" red="0.53105627629999996" green="0.2994723621" blue="0.50200725400000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="baseBackgroundColor" red="0.5294373631" green="0.29802709820000001" blue="0.5019572377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </buttonConfiguration>
                                                     <connections>
-                                                        <action selector="submitButtonTapped:" destination="w3J-sy-cNX" eventType="touchUpInside" id="oCB-8L-FsZ"/>
+                                                        <action selector="submitQuestionButtonTapped:" destination="6pk-xV-G4H" eventType="touchUpInside" id="juf-Br-gxI"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gVs-sn-rLj">
+                                                    <rect key="frame" x="55" y="76" width="283" height="35"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="35" id="OsP-97-ewI"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="filled" title="Button">
+                                                        <color key="baseBackgroundColor" red="0.5294373631" green="0.29802709820000001" blue="0.5019572377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </buttonConfiguration>
+                                                    <connections>
+                                                        <action selector="addNewQuestionPressed:" destination="6pk-xV-G4H" eventType="touchUpInside" id="wja-L7-OT5"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
                                             <color key="backgroundColor" red="0.62898742050000001" green="0.5097299246" blue="0.56723369469999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
-                                                <constraint firstItem="eeC-ET-ntG" firstAttribute="top" secondItem="TC0-w7-nuh" secondAttribute="topMargin" constant="20" id="9Za-re-M7u"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="eeC-ET-ntG" secondAttribute="trailing" constant="40" id="BVj-dK-YQy"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="eeC-ET-ntG" secondAttribute="bottom" constant="20" id="UIK-7g-yOD"/>
-                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="eeC-ET-ntG" secondAttribute="trailing" id="foI-RT-Hlt"/>
-                                                <constraint firstItem="eeC-ET-ntG" firstAttribute="leading" secondItem="TC0-w7-nuh" secondAttribute="leadingMargin" constant="40" id="iiz-f5-nh2"/>
+                                                <constraint firstItem="gVs-sn-rLj" firstAttribute="leading" secondItem="E4J-D0-imJ" secondAttribute="leadingMargin" constant="35" id="0gG-NV-hiL"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="gVs-sn-rLj" secondAttribute="trailing" constant="35" id="145-Mq-4zF"/>
+                                                <constraint firstItem="gVs-sn-rLj" firstAttribute="top" secondItem="u0x-rh-Cy8" secondAttribute="bottom" constant="20" id="8OR-9k-MXw"/>
+                                                <constraint firstItem="u0x-rh-Cy8" firstAttribute="top" secondItem="E4J-D0-imJ" secondAttribute="topMargin" constant="10" id="GyN-ia-yui"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="u0x-rh-Cy8" secondAttribute="trailing" constant="35" id="JiO-PE-osQ"/>
+                                                <constraint firstItem="u0x-rh-Cy8" firstAttribute="leading" secondItem="E4J-D0-imJ" secondAttribute="leadingMargin" constant="35" id="qP5-1y-28t"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="submitButton" destination="eeC-ET-ntG" id="tCk-kC-J5y"/>
+                                            <outlet property="addNewQuestionButton" destination="gVs-sn-rLj" id="eE0-aV-X5y"/>
+                                            <outlet property="submitQuestionButton" destination="u0x-rh-Cy8" id="jOr-ZO-3js"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ShowQuestionListCell" rowHeight="113" id="Hew-Ni-Wgi" customClass="ShowQuestionListTableViewCell" customModule="TestEvaluationApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="392" width="393" height="113"/>
+                                        <rect key="frame" x="0.0" y="419" width="393" height="113"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Hew-Ni-Wgi" id="P3e-nb-55Z">
                                             <rect key="frame" x="0.0" y="0.0" width="393" height="113"/>
