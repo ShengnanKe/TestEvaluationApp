@@ -37,73 +37,75 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ErG-wh-7EZ">
-                                                    <rect key="frame" x="20" y="31" width="353" height="34"/>
+                                                    <rect key="frame" x="20" y="11" width="353" height="34"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
-                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Yhz-Cd-zw4">
-                                                    <rect key="frame" x="20" y="80" width="353" height="34"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
-                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bqi-iX-1BQ">
-                                                    <rect key="frame" x="20" y="129" width="353" height="34"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
-                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HDB-LW-8R4">
-                                                    <rect key="frame" x="20" y="178" width="353" height="34"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
-                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Weg-m3-tT5">
-                                                    <rect key="frame" x="20" y="227" width="353" height="34"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="WHu-Jc-3S9">
+                                                    <rect key="frame" x="0.0" y="55" width="393" height="117"/>
+                                                </stackView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vFu-gv-Jmx">
+                                                    <rect key="frame" x="220" y="192" width="150" height="34"/>
+                                                    <color key="backgroundColor" red="0.45737842680000002" green="0.25792407309999998" blue="0.4323596167" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="150" id="Brp-W3-i2P"/>
+                                                        <constraint firstAttribute="height" constant="34" id="VJV-S6-fOw"/>
+                                                    </constraints>
+                                                    <color key="tintColor" red="0.45737842680000002" green="0.25792407309999998" blue="0.4323596167" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="filled" title="Button"/>
+                                                    <connections>
+                                                        <action selector="removeOptionPressed:" destination="wZI-gY-Nyd" eventType="touchUpInside" id="xfh-6B-lvE"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ACL-Gt-YjV">
+                                                    <rect key="frame" x="20" y="190" width="150" height="35"/>
+                                                    <color key="backgroundColor" red="0.45737842680000002" green="0.25792407309999998" blue="0.4323596167" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="150" id="M4q-pq-uyt"/>
+                                                        <constraint firstAttribute="height" constant="35" id="yxS-hM-QPE"/>
+                                                    </constraints>
+                                                    <color key="tintColor" red="0.45737842680000002" green="0.25792407309999998" blue="0.4323596167" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="filled" title="Button"/>
+                                                    <connections>
+                                                        <action selector="addOptionPressed:" destination="wZI-gY-Nyd" eventType="touchUpInside" id="zOw-0D-wLS"/>
+                                                    </connections>
+                                                </button>
                                                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Gs1-sG-IOf">
-                                                    <rect key="frame" x="100" y="276" width="193" height="32"/>
+                                                    <rect key="frame" x="100" y="246" width="193" height="32"/>
                                                     <color key="backgroundColor" red="0.45737842680000002" green="0.25792407309999998" blue="0.4323596167" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <segments>
                                                         <segment title="First"/>
                                                         <segment title="Second"/>
                                                     </segments>
                                                 </segmentedControl>
-                                                <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="WHu-Jc-3S9">
-                                                    <rect key="frame" x="0.0" y="61" width="110" height="200"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </stackView>
                                             </subviews>
                                             <color key="backgroundColor" red="0.62898742046552836" green="0.5097299246126018" blue="0.56723369469414286" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
-                                                <constraint firstItem="Bqi-iX-1BQ" firstAttribute="top" secondItem="Yhz-Cd-zw4" secondAttribute="bottom" constant="15" id="3vs-t4-3Xp"/>
-                                                <constraint firstItem="Gs1-sG-IOf" firstAttribute="leading" secondItem="9TV-be-cPn" secondAttribute="leadingMargin" constant="80" id="GWI-Wn-CZc"/>
-                                                <constraint firstItem="Weg-m3-tT5" firstAttribute="leading" secondItem="9TV-be-cPn" secondAttribute="leadingMargin" id="OP8-Sd-g5Y"/>
-                                                <constraint firstItem="Bqi-iX-1BQ" firstAttribute="trailing" secondItem="9TV-be-cPn" secondAttribute="trailingMargin" id="Pl2-GG-jp6"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="Gs1-sG-IOf" secondAttribute="trailing" constant="80" id="RPT-ib-3WQ"/>
-                                                <constraint firstItem="ErG-wh-7EZ" firstAttribute="top" secondItem="9TV-be-cPn" secondAttribute="topMargin" constant="20" id="RwH-mn-NuR"/>
-                                                <constraint firstItem="Gs1-sG-IOf" firstAttribute="top" secondItem="Weg-m3-tT5" secondAttribute="bottom" constant="15" id="T0R-Rf-xCV"/>
-                                                <constraint firstItem="ErG-wh-7EZ" firstAttribute="trailing" secondItem="9TV-be-cPn" secondAttribute="trailingMargin" id="UJ8-lC-JiC"/>
-                                                <constraint firstItem="Yhz-Cd-zw4" firstAttribute="leading" secondItem="9TV-be-cPn" secondAttribute="leadingMargin" id="WlZ-KX-k2r"/>
-                                                <constraint firstItem="HDB-LW-8R4" firstAttribute="leading" secondItem="9TV-be-cPn" secondAttribute="leadingMargin" id="Z1R-Rm-r89"/>
-                                                <constraint firstItem="ErG-wh-7EZ" firstAttribute="leading" secondItem="9TV-be-cPn" secondAttribute="leadingMargin" id="aWU-AY-NYF"/>
-                                                <constraint firstItem="Weg-m3-tT5" firstAttribute="trailing" secondItem="9TV-be-cPn" secondAttribute="trailingMargin" id="bAH-ui-eh8"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="Gs1-sG-IOf" secondAttribute="bottom" constant="5" id="g1q-5g-0kF"/>
-                                                <constraint firstItem="Weg-m3-tT5" firstAttribute="top" secondItem="HDB-LW-8R4" secondAttribute="bottom" constant="15" id="jeQ-nW-jh8"/>
-                                                <constraint firstItem="Yhz-Cd-zw4" firstAttribute="trailing" secondItem="9TV-be-cPn" secondAttribute="trailingMargin" id="ohv-zv-x4L"/>
-                                                <constraint firstItem="Bqi-iX-1BQ" firstAttribute="leading" secondItem="9TV-be-cPn" secondAttribute="leadingMargin" id="p9K-a6-vjn"/>
-                                                <constraint firstItem="Yhz-Cd-zw4" firstAttribute="top" secondItem="ErG-wh-7EZ" secondAttribute="bottom" constant="15" id="pbt-n4-V67"/>
-                                                <constraint firstItem="HDB-LW-8R4" firstAttribute="top" secondItem="Bqi-iX-1BQ" secondAttribute="bottom" constant="15" id="wTE-CA-lw1"/>
-                                                <constraint firstItem="HDB-LW-8R4" firstAttribute="trailing" secondItem="9TV-be-cPn" secondAttribute="trailingMargin" id="xUO-jp-rL1"/>
+                                                <constraint firstItem="ACL-Gt-YjV" firstAttribute="leading" secondItem="9TV-be-cPn" secondAttribute="leadingMargin" id="2Sl-t1-WQV"/>
+                                                <constraint firstItem="WHu-Jc-3S9" firstAttribute="centerX" secondItem="ErG-wh-7EZ" secondAttribute="centerX" id="5fX-z8-ivb"/>
+                                                <constraint firstItem="WHu-Jc-3S9" firstAttribute="leading" secondItem="9TV-be-cPn" secondAttribute="leading" id="7qs-GI-MUJ"/>
+                                                <constraint firstItem="WHu-Jc-3S9" firstAttribute="top" secondItem="ErG-wh-7EZ" secondAttribute="bottom" constant="10" id="7sy-CK-4Za"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="Gs1-sG-IOf" secondAttribute="bottom" constant="35" id="8Jo-lG-dNZ"/>
+                                                <constraint firstItem="ErG-wh-7EZ" firstAttribute="top" secondItem="9TV-be-cPn" secondAttribute="topMargin" id="B3u-zo-xWX"/>
+                                                <constraint firstItem="Gs1-sG-IOf" firstAttribute="top" secondItem="vFu-gv-Jmx" secondAttribute="bottom" constant="20" id="Cxt-Tw-Wyr"/>
+                                                <constraint firstItem="ACL-Gt-YjV" firstAttribute="top" secondItem="WHu-Jc-3S9" secondAttribute="bottom" constant="18" id="KVF-HC-D4O"/>
+                                                <constraint firstItem="ErG-wh-7EZ" firstAttribute="leading" secondItem="9TV-be-cPn" secondAttribute="leadingMargin" id="Pbe-2z-kHI"/>
+                                                <constraint firstItem="Gs1-sG-IOf" firstAttribute="leading" secondItem="9TV-be-cPn" secondAttribute="leadingMargin" constant="80" id="faW-3U-IvE"/>
+                                                <constraint firstItem="ACL-Gt-YjV" firstAttribute="leading" secondItem="9TV-be-cPn" secondAttribute="leadingMargin" id="i1P-WZ-Ir0"/>
+                                                <constraint firstItem="vFu-gv-Jmx" firstAttribute="top" secondItem="WHu-Jc-3S9" secondAttribute="bottom" constant="20" id="iE6-wz-gyN"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="Gs1-sG-IOf" secondAttribute="trailing" constant="80" id="jbU-af-8cY"/>
+                                                <constraint firstItem="vFu-gv-Jmx" firstAttribute="leading" secondItem="ACL-Gt-YjV" secondAttribute="trailing" constant="50" id="qOj-27-La7"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="ErG-wh-7EZ" secondAttribute="trailing" id="uYm-3q-tPV"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="choice1TextField" destination="Yhz-Cd-zw4" id="tPH-Ca-vq6"/>
-                                            <outlet property="choice2TextField" destination="Bqi-iX-1BQ" id="IbL-dT-0gb"/>
-                                            <outlet property="choice3TextField" destination="HDB-LW-8R4" id="o3N-37-bx0"/>
-                                            <outlet property="choice4TextField" destination="Weg-m3-tT5" id="xyo-ew-C46"/>
+                                            <outlet property="addButton" destination="ACL-Gt-YjV" id="rit-I5-a1P"/>
                                             <outlet property="correctAnswerSegmentedControl" destination="Gs1-sG-IOf" id="FnZ-59-6Gg"/>
+                                            <outlet property="optionsStackView" destination="WHu-Jc-3S9" id="gDF-d4-TKV"/>
                                             <outlet property="questionTextField" destination="ErG-wh-7EZ" id="ILE-ZQ-Cme"/>
+                                            <outlet property="removeButton" destination="vFu-gv-Jmx" id="MgE-Ts-1gr"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SubmitQuizCell" rowHeight="113" id="w3J-sy-cNX" customClass="SubmitQuizTableViewCell" customModule="TestEvaluationApp" customModuleProvider="target">
