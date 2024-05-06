@@ -43,8 +43,8 @@ class QuizCreationFormViewController: UIViewController, UITableViewDelegate, UIT
         quizCreationTableView.delegate = self
         quizCreationTableView.dataSource = self
         quizCreationTableView.separatorColor = .clear
-        
         quizCreationTitleLabel.text = "Quiz Questions Creation Form"
+        
         quizCreationTableView.register(UINib(nibName: "SubmitQuestionTableViewCell", bundle: nil), forCellReuseIdentifier: "SubmitQuestionCell")
     }
     
