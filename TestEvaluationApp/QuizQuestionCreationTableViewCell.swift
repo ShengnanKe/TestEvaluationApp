@@ -77,7 +77,7 @@ class QuizQuestionCreationTableViewCell: UITableViewCell, UITextFieldDelegate {
         optionTextField.borderStyle = .roundedRect
         optionTextField.text = text
         optionTextField.delegate = self
-//        optionTextField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
+
         optionsStackView.addArrangedSubview(optionTextField)
         
         correctAnswerSegmentedControl.insertSegment(withTitle: String(optionsStackView.arrangedSubviews.count), at: optionsStackView.arrangedSubviews.count - 1, animated: true)
@@ -91,12 +91,6 @@ class QuizQuestionCreationTableViewCell: UITableViewCell, UITextFieldDelegate {
                 lastView.removeFromSuperview()
                 correctAnswerSegmentedControl.removeSegment(at: optionsStackView.arrangedSubviews.count, animated: true)
             }
-//            let indexToRemove = optionsStackView.arrangedSubviews.count - 1
-//            optionsStackView.arrangedSubviews.last?.removeFromSuperview()
-//            correctAnswerSegmentedControl.removeSegment(at: indexToRemove, animated: true)
-//            if correctAnswerSegmentedControl.selectedSegmentIndex >= indexToRemove {
-//                correctAnswerSegmentedControl.selectedSegmentIndex = correctAnswerSegmentedControl.numberOfSegments - 1
-//            }
         }
     }
     
