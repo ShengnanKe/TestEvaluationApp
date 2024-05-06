@@ -17,6 +17,14 @@
  
  view.endEditing(true) -> for last entry to be saved
  
+ 
+  myTextField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
+
+     @objc func textFieldEditingChanged(_ textField: UITextField) {
+          updateText?(textField.text ?? "")
+      }
+ 
+ 
  */
 
 // UIStackView
@@ -89,7 +97,7 @@ class QuizCreationFormViewController: UIViewController, UITableViewDelegate, UIT
             let cell = tableView.dequeueReusableCell(withIdentifier: "QuizQuestionCreationCell", for: indexPath) as! QuizQuestionCreationTableViewCell
             let questionInfo = questions[indexPath.row]
             cell.questionTextField.text = questionInfo["question"] as? String
-            
+            cell.questionIndex = indexPath.row // for keey track of questions 
             //cell.clearOptions() // unsure maybe need to set it up for clear existing options
             
             cell.textChanged = { [weak self] newText in

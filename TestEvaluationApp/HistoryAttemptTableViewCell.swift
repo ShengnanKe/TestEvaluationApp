@@ -15,7 +15,8 @@ class HistoryAttemptTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        print("HistoryAttemptTableViewCell loaded successfully")// Initialization code
+        // check
+        //print("History load good")
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -24,8 +25,8 @@ class HistoryAttemptTableViewCell: UITableViewCell {
     
     // Function to configure cell with data
     func configure(with data: [String: Any]) {
-        usernameLabel.text = data["username"] as? String ?? "Unknown"
+        usernameLabel.text = data["username"] as? String ?? "Anonymous"
         scoreLabel.text = "Score: \(data["score"] as? String ?? "N/A")"
-        dateLabel.text = data["date"] as? String ?? "Unknown Date"
+        dateLabel.text = data["date"] as? String ?? "No Date"
     }
 }

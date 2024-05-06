@@ -24,6 +24,7 @@ class QuizQuestionCreationTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     weak var delegate: QuizQuestionCreationCellDelegate?
     var textChanged: ((String) -> Void)? // for saving data
+    var questionIndex: Int = 0
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -34,13 +35,18 @@ class QuizQuestionCreationTableViewCell: UITableViewCell, UITextFieldDelegate {
         questionTextField.delegate = self
         setupInitialOptions()
         correctAnswerSegmentedControl.addTarget(self, action: #selector(correctAnswerChanged(_:)), for: .valueChanged)
-        
-        questionTextField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged) // for saving data
+    }
+    
+    func configureOptionTextField(_ textField: UITextField) {
+        textField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
+        //textField.tag = index
     }
     
     @objc func textFieldEditingChanged(_ textField: UITextField) {
-            textChanged?(textField.text ?? "")
-        } // for saving data
+        guard let delegate = delegate as? QuizCreationFormViewController, let text = textField.text else { return }
+        delegate.updateOption(forQuestionAtIndex: questionIndex, optionIndex: textField.tag, newText: text)
+        print("hahaha")
+    }
     
     @IBAction func addOptionPressed(_ sender: UIButton) {
         delegate?.addOptionPressed(in: self)
@@ -50,8 +56,7 @@ class QuizQuestionCreationTableViewCell: UITableViewCell, UITextFieldDelegate {
         delegate?.removeOptionPressed(in: self)
     }
     
-    func setupInitialOptions() {
-        // Start with a default number of options, e.g., 2
+    func setupInitialOptions() { // is this necessary? check
         for index in 0..<2 {
             addOptionField(withText: "Option \(index)")
         }
@@ -84,7 +89,8 @@ class QuizQuestionCreationTableViewCell: UITableViewCell, UITextFieldDelegate {
         optionTextField.borderStyle = .roundedRect
         optionTextField.text = text
         optionTextField.delegate = self
-
+        configureOptionTextField(optionTextField)
+        
         optionsStackView.addArrangedSubview(optionTextField)
         
         correctAnswerSegmentedControl.insertSegment(withTitle: String(optionsStackView.arrangedSubviews.count), at: optionsStackView.arrangedSubviews.count - 1, animated: true)
@@ -115,7 +121,7 @@ class QuizQuestionCreationTableViewCell: UITableViewCell, UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         delegate?.textFieldDidEndEditing(textField, in: self)
     }
-
-
+    
+    
 }
 
