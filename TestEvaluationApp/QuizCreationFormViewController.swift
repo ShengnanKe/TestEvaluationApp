@@ -39,7 +39,7 @@ class QuizCreationFormViewController: UIViewController, UITableViewDelegate, UIT
         quizCreationTableView.separatorColor = .clear
         quizCreationTitleLabel.text = "Quiz Questions Creation Form"
         
-        quizCreationTableView.register(UINib(nibName: "SubmitQuestionTableViewCell", bundle: nil), forCellReuseIdentifier: "SubmitQuestionCell")
+//        quizCreationTableView.register(UINib(nibName: "SubmitQuestionTableViewCell", bundle: nil), forCellReuseIdentifier: "SubmitQuestionCell")
         
         loadQuestionsFromFile()
     }
@@ -90,11 +90,15 @@ class QuizCreationFormViewController: UIViewController, UITableViewDelegate, UIT
             let questionInfo = questions[indexPath.row]
             cell.questionTextField.text = questionInfo["question"] as? String
             
-            cell.clearOptions() // unsure maybe need to set it up for clear existing options
+            //cell.clearOptions() // unsure maybe need to set it up for clear existing options
+            
+            cell.textChanged = { [weak self] newText in
+                guard let self = self else { return }
+                self.questions[indexPath.row]["question"] = newText
+            }
             
             cell.configureOptions(options: questionInfo["options"] as? [String] ?? [])
-            
-            cell.correctAnswerSegmentedControl.selectedSegmentIndex = questionInfo["answer"] as? Int ?? -1
+            cell.correctAnswerSegmentedControl.selectedSegmentIndex = questionInfo["answer"] as? Int ?? -1 // defalut to no correct answer
             
             cell.delegate = self
             return cell
@@ -105,10 +109,8 @@ class QuizCreationFormViewController: UIViewController, UITableViewDelegate, UIT
             cell.submitAction = { [weak self] in
                 self?.saveQuestionsToFile()
             }
-            
             return cell
         }
-        
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -170,12 +172,6 @@ class QuizCreationFormViewController: UIViewController, UITableViewDelegate, UIT
             print("Failed to save data: \(error)")
         }
     }
-    
-//    func getDocumentsDirectory() -> URL {
-//        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-//        return paths[0]
-//    }
-    
 
     func getDocumentsDirectory() -> URL {
         FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!

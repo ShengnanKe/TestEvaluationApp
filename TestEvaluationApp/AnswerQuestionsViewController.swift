@@ -18,7 +18,6 @@ class AnswerQuestionsViewController: UIViewController, UITableViewDelegate, UITa
     @IBOutlet weak var quizAttemptTableView: UITableView!
     //var AnswerQuestionTableView: UITableView
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -60,38 +59,32 @@ class AnswerQuestionsViewController: UIViewController, UITableViewDelegate, UITa
         return 3 // One for the question, one for the options, one for feedback
     }
     
+    //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    //        switch indexPath.row {
+    //        case 1: // for Options
+    //            return CGFloat(60 * selectedQuestions[currentQuestionIndex]["options"].count + 20)
+    //        default:
+    //            return UITableView.automaticDimension
+    //        }
+    //    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard indexPath.section < selectedQuestions.count else {
-            fatalError("Section index \(indexPath.section) out of range")
-        }
-        
-        let questionData = selectedQuestions[indexPath.section]
+        let questionData = selectedQuestions[currentQuestionIndex]
         switch indexPath.row {
         case 0:
-//            guard let cell = tableView.dequeueReusableCell(withIdentifier: "QuestionCell", for: indexPath) as? QuestionTableViewCell else {
-//                fatalError("Unable to dequeue QuestionTableViewCell")
-//            }
-//            if let questionText = selectedQuestions[indexPath.section]["question"] as? String {
-//                cell.questionLabel.text = questionText
-//            } else {
-//                fatalError("Question text not found in data")
-//            }
-//            return cell
-//            
             let cell = tableView.dequeueReusableCell(withIdentifier: "QuestionCell", for: indexPath) as! QuestionTableViewCell
-            let questionData = questions[indexPath.row]  // Adjust according to your data structure
             cell.questionLabel.text = questionData["question"] as? String ?? "No question available"
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "OptionsCell", for: indexPath) as! OptionsTableViewCell
-            let options = questions[indexPath.section]["options"] as? [String] ?? []
-            cell.setupOptions(options: options, questionIndex: currentQuestionIndex) { selectedAnswer in
-                self.checkAnswer(selectedAnswer: selectedAnswer)
+            if let options = questionData["options"] as? [String] {
+                cell.setupOptions(options: options, questionIndex: currentQuestionIndex) { selectedAnswer in
+                    self.checkAnswer(selectedAnswer: selectedAnswer)
+                }
             }
             return cell
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "FeedbackCell", for: indexPath) as! FeedbackTableViewCell
-            // Initially hide feedback
             cell.feedbackLabel.isHidden = true
             return cell
         default:
@@ -100,21 +93,59 @@ class AnswerQuestionsViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     func checkAnswer(selectedAnswer: Int) {
+        print("Checking answer: \(selectedAnswer)")
+        guard currentQuestionIndex < selectedQuestions.count else { return }
         let correctAnswer = selectedQuestions[currentQuestionIndex]["answer"] as? Int ?? -1
+        let isCorrect = selectedAnswer == correctAnswer
+        correctAnswers += isCorrect ? 1 : 0
+        
         if let feedbackCell = quizAttemptTableView.cellForRow(at: IndexPath(row: 2, section: 0)) as? FeedbackTableViewCell {
-            feedbackCell.feedbackLabel.isHidden = false
-            if selectedAnswer == correctAnswer {
-                correctAnswers += 1
-                feedbackCell.configureFeedback(isCorrect: true, correctAnswer: "")
-            } else {
-                if let correctOption = selectedQuestions[currentQuestionIndex]["options"] as? [String], correctAnswer >= 0 && correctAnswer < correctOption.count {
-                    feedbackCell.configureFeedback(isCorrect: false, correctAnswer: correctOption[correctAnswer])
-                }
-            }
+            let correctOption = selectedQuestions[currentQuestionIndex]["options"] as? [String] ?? []
+            let correctAnswerText = (correctAnswer >= 0 && correctAnswer < correctOption.count) ? correctOption[correctAnswer] : "N/A"
+            feedbackCell.configureFeedback(isCorrect: isCorrect, correctAnswer: correctAnswerText)
         }
-        // Move to next question or finish quiz
-        nextQuestion()
+        
+//        if let feedbackCell = quizAttemptTableView.cellForRow(at: IndexPath(row: 2, section: 0)) as? FeedbackTableViewCell {
+//            feedbackCell.feedbackLabel.isHidden = false
+//            
+//            if let options = selectedQuestions[currentQuestionIndex]["options"] as? [String], correctAnswer >= 0, correctAnswer < options.count {
+//                feedbackCell.feedbackLabel.text = isCorrect ? "Correct!" : "Incorrect! Correct answer: \(options[correctAnswer])"
+//            } else {
+//                feedbackCell.feedbackLabel.text = "Error retrieving correct answer."
+//            }
+//            
+//            feedbackCell.feedbackLabel.textColor = isCorrect ? UIColor.green : UIColor.red
+//        }
+        
+        // Proceed to the next question after a short delay
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.nextQuestion()
+        }
     }
+    
+    
+    
+    //    func checkAnswer(selectedAnswer: Int) {
+    //        let correctAnswer = selectedQuestions[currentQuestionIndex]["answer"] as? Int ?? -1
+    //        let correctOption = (selectedQuestions[currentQuestionIndex]["options"] as? [String])?[correctAnswer]
+    //
+    //        if let feedbackCell = quizAttemptTableView.cellForRow(at: IndexPath(row: 2, section: 0)) as? FeedbackTableViewCell {
+    //            feedbackCell.feedbackLabel.isHidden = false
+    //
+    //            if selectedAnswer == correctAnswer {
+    //                correctAnswers += 1
+    //                feedbackCell.feedbackLabel.text = "Correct!"
+    //                feedbackCell.feedbackLabel.textColor = UIColor.green
+    //            } else {
+    //                feedbackCell.feedbackLabel.text = "Incorrect! The correct answer was '\(correctOption ?? "N/A")'."
+    //                feedbackCell.feedbackLabel.textColor = UIColor.red
+    //            }
+    //        }
+    //
+    //        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+    //            self.nextQuestion()
+    //        }
+    //    }
     
     func nextQuestion() {
         if currentQuestionIndex < selectedQuestions.count - 1 {
@@ -132,35 +163,49 @@ class AnswerQuestionsViewController: UIViewController, UITableViewDelegate, UITa
         dateFormatter.timeStyle = .medium
         let dateString = dateFormatter.string(from: Date())
         
-        let resultString = "Username: \(username ?? "Anonymous"), Score: \(correctAnswers)/\(selectedQuestions.count), Date: \(dateString)\n"
+        let resultData = [
+            "username": username ?? "Anonymous",
+            "date": dateString,
+            "score": "\(correctAnswers)/\(selectedQuestions.count)",
+            "questions": selectedQuestions.map { $0["question"] as? String ?? "Unknown Question" },
+            "answers": selectedQuestions.map { $0["selectedAnswer"] as? Int ?? -1 }
+        ] as [String : Any]
         
         do {
-            // Check if file exists
+            let dataToSave = try JSONSerialization.data(withJSONObject: resultData, options: .prettyPrinted)
             if FileManager.default.fileExists(atPath: filePath.path) {
-                // If file exists, append the new results
-                if let fileHandle = try? FileHandle(forWritingTo: filePath) {
+                // If the file exists, append new data
+                if let fileHandle = FileHandle(forWritingAtPath: filePath.path) {
                     fileHandle.seekToEndOfFile()
-                    if let data = resultString.data(using: .utf8) {
-                        fileHandle.write(data)
-                    }
+                    fileHandle.write(dataToSave)
                     fileHandle.closeFile()
                 }
             } else {
-                // If file does not exist, create it and write data
-                try resultString.write(to: filePath, atomically: true, encoding: .utf8)
+                // If the file does not exist, create it and write data
+                try dataToSave.write(to: filePath, options: .atomic)
             }
+            print("Saved successfully to \(filePath)")
         } catch {
-            print("Failed to write results: \(error)")
+            print("Failed to save results: \(error)")
         }
     }
-
+    
     func finishQuiz() {
         print("Quiz Completed. Score: \(correctAnswers)/\(selectedQuestions.count)")
         saveResults()
-        // Here you might want to navigate to a results summary page or return to the main menu
+    
+        navigationController?.popViewController(animated: true) // go back to QuizAttemptViewController, another user and do the quiz
     }
-
     
-    
-    
+    func verifySavedResults() {
+        let filePath = getDocumentsDirectory().appendingPathComponent("quizResultsData.txt")
+        do {
+            let data = try Data(contentsOf: filePath)
+            let savedResults = try JSONSerialization.jsonObject(with: data, options: [])
+            print("Saved Results: \(savedResults)")
+        } catch {
+            print("Failed to read saved results: \(error)")
+        }
+    }
 }
+

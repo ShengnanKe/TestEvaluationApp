@@ -20,7 +20,7 @@ class QuizHistoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        quizHistoryTitleLabel.text = "Quiz History"
+        quizHistoryTitleLabel.text = "Quiz Attempt History"
 
     }
     

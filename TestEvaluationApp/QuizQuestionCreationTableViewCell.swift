@@ -23,6 +23,7 @@ class QuizQuestionCreationTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet weak var correctAnswerSegmentedControl: UISegmentedControl!
     
     weak var delegate: QuizQuestionCreationCellDelegate?
+    var textChanged: ((String) -> Void)? // for saving data
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -33,7 +34,13 @@ class QuizQuestionCreationTableViewCell: UITableViewCell, UITextFieldDelegate {
         questionTextField.delegate = self
         setupInitialOptions()
         correctAnswerSegmentedControl.addTarget(self, action: #selector(correctAnswerChanged(_:)), for: .valueChanged)
+        
+        questionTextField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged) // for saving data
     }
+    
+    @objc func textFieldEditingChanged(_ textField: UITextField) {
+            textChanged?(textField.text ?? "")
+        } // for saving data
     
     @IBAction func addOptionPressed(_ sender: UIButton) {
         delegate?.addOptionPressed(in: self)

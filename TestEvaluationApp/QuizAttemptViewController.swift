@@ -32,5 +32,4 @@ class QuizAttemptViewController: UIViewController {
             destinationVC.questions = selectedQuestions
         }
     }
-
 }
