@@ -25,9 +25,10 @@ class AnswerQuestionsViewController: UIViewController, UITableViewDelegate, UITa
         quizAttemptTableView.dataSource = self
         quizAttemptTableView.separatorColor = .clear
         
-        quizAttemptTableView.register(QuestionTableViewCell.self, forCellReuseIdentifier: "QuestionCell")
         quizAttemptTableView.register(OptionsTableViewCell.self, forCellReuseIdentifier: "OptionsCell")
-        quizAttemptTableView.register(FeedbackTableViewCell.self, forCellReuseIdentifier: "FeedbackCell")
+        
+        //        quizAttemptTableView.register(QuestionTableViewCell.self, forCellReuseIdentifier: "QuestionCell")
+        //        quizAttemptTableView.register(FeedbackTableViewCell.self, forCellReuseIdentifier: "FeedbackCell")
         
         loadQuizData()
     }
@@ -59,14 +60,43 @@ class AnswerQuestionsViewController: UIViewController, UITableViewDelegate, UITa
         return 3 // One for the question, one for the options, one for feedback
     }
     
-    //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    //        switch indexPath.row {
-    //        case 1: // for Options
-    //            return CGFloat(60 * selectedQuestions[currentQuestionIndex]["options"].count + 20)
-    //        default:
-    //            return UITableView.automaticDimension
-    //        }
-    //    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch indexPath.row {
+        case 0:
+            return 120
+        case 1:
+            if let options = selectedQuestions[currentQuestionIndex]["options"] as? [String] {
+                let optionsCount = options.count
+                return CGFloat(50 * optionsCount + 40 + 20 * (optionsCount - 1)) // adjust based on the number of options
+            }
+            return 120
+        case 2:
+            return 60 // Feedback cell
+        default:
+            return UITableView.automaticDimension
+        }
+    }
+    
+    func checkAnswer(selectedAnswer: Int) {
+        print("Checking answer: \(selectedAnswer)")
+        guard currentQuestionIndex < selectedQuestions.count else { return }
+        let correctAnswer = selectedQuestions[currentQuestionIndex]["answer"] as? Int ?? -1
+        let isCorrect = selectedAnswer == correctAnswer
+        correctAnswers += isCorrect ? 1 : 0
+        
+        selectedQuestions[currentQuestionIndex]["selectedAnswer"] = selectedAnswer
+        
+        if let feedbackCell = quizAttemptTableView.cellForRow(at: IndexPath(row: 2, section: 0)) as? FeedbackTableViewCell {
+            let correctOption = selectedQuestions[currentQuestionIndex]["options"] as? [String] ?? []
+            let correctAnswerText = (correctAnswer >= 0 && correctAnswer < correctOption.count) ? correctOption[correctAnswer] : "N/A"
+            feedbackCell.configureFeedback(isCorrect: isCorrect, correctAnswer: correctAnswerText)
+            feedbackCell.isHidden = false
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.nextQuestion()
+        }
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let questionData = selectedQuestions[currentQuestionIndex]
@@ -78,74 +108,25 @@ class AnswerQuestionsViewController: UIViewController, UITableViewDelegate, UITa
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "OptionsCell", for: indexPath) as! OptionsTableViewCell
             if let options = questionData["options"] as? [String] {
-                cell.setupOptions(options: options, questionIndex: currentQuestionIndex) { selectedAnswer in
+                cell.setupOptions(options: options, questionIndex: currentQuestionIndex) { selectedAnswer, questionIndex in
+                    // Directly update the selected answer in the selectedQuestions array
+                    self.selectedQuestions[questionIndex]["selectedAnswer"] = selectedAnswer
                     self.checkAnswer(selectedAnswer: selectedAnswer)
                 }
+                //                cell.setupOptions(options: options, questionIndex: currentQuestionIndex) { selectedAnswer in
+                //                    self.checkAnswer(selectedAnswer: selectedAnswer)
+                //                }
             }
             return cell
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "FeedbackCell", for: indexPath) as! FeedbackTableViewCell
-            cell.feedbackLabel.isHidden = true
+            cell.feedbackLabel.isHidden = true // Initially hide the feedback
             return cell
         default:
             fatalError("Unexpected indexPath")
         }
     }
     
-    func checkAnswer(selectedAnswer: Int) {
-        print("Checking answer: \(selectedAnswer)")
-        guard currentQuestionIndex < selectedQuestions.count else { return }
-        let correctAnswer = selectedQuestions[currentQuestionIndex]["answer"] as? Int ?? -1
-        let isCorrect = selectedAnswer == correctAnswer
-        correctAnswers += isCorrect ? 1 : 0
-        
-        if let feedbackCell = quizAttemptTableView.cellForRow(at: IndexPath(row: 2, section: 0)) as? FeedbackTableViewCell {
-            let correctOption = selectedQuestions[currentQuestionIndex]["options"] as? [String] ?? []
-            let correctAnswerText = (correctAnswer >= 0 && correctAnswer < correctOption.count) ? correctOption[correctAnswer] : "N/A"
-            feedbackCell.configureFeedback(isCorrect: isCorrect, correctAnswer: correctAnswerText)
-        }
-        
-//        if let feedbackCell = quizAttemptTableView.cellForRow(at: IndexPath(row: 2, section: 0)) as? FeedbackTableViewCell {
-//            feedbackCell.feedbackLabel.isHidden = false
-//            
-//            if let options = selectedQuestions[currentQuestionIndex]["options"] as? [String], correctAnswer >= 0, correctAnswer < options.count {
-//                feedbackCell.feedbackLabel.text = isCorrect ? "Correct!" : "Incorrect! Correct answer: \(options[correctAnswer])"
-//            } else {
-//                feedbackCell.feedbackLabel.text = "Error retrieving correct answer."
-//            }
-//            
-//            feedbackCell.feedbackLabel.textColor = isCorrect ? UIColor.green : UIColor.red
-//        }
-        
-        // Proceed to the next question after a short delay
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            self.nextQuestion()
-        }
-    }
-    
-    
-    
-    //    func checkAnswer(selectedAnswer: Int) {
-    //        let correctAnswer = selectedQuestions[currentQuestionIndex]["answer"] as? Int ?? -1
-    //        let correctOption = (selectedQuestions[currentQuestionIndex]["options"] as? [String])?[correctAnswer]
-    //
-    //        if let feedbackCell = quizAttemptTableView.cellForRow(at: IndexPath(row: 2, section: 0)) as? FeedbackTableViewCell {
-    //            feedbackCell.feedbackLabel.isHidden = false
-    //
-    //            if selectedAnswer == correctAnswer {
-    //                correctAnswers += 1
-    //                feedbackCell.feedbackLabel.text = "Correct!"
-    //                feedbackCell.feedbackLabel.textColor = UIColor.green
-    //            } else {
-    //                feedbackCell.feedbackLabel.text = "Incorrect! The correct answer was '\(correctOption ?? "N/A")'."
-    //                feedbackCell.feedbackLabel.textColor = UIColor.red
-    //            }
-    //        }
-    //
-    //        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-    //            self.nextQuestion()
-    //        }
-    //    }
     
     func nextQuestion() {
         if currentQuestionIndex < selectedQuestions.count - 1 {
@@ -163,27 +144,29 @@ class AnswerQuestionsViewController: UIViewController, UITableViewDelegate, UITa
         dateFormatter.timeStyle = .medium
         let dateString = dateFormatter.string(from: Date())
         
-        let resultData = [
+        let newResultData = [
             "username": username ?? "Anonymous",
             "date": dateString,
             "score": "\(correctAnswers)/\(selectedQuestions.count)",
             "questions": selectedQuestions.map { $0["question"] as? String ?? "Unknown Question" },
             "answers": selectedQuestions.map { $0["selectedAnswer"] as? Int ?? -1 }
-        ] as [String : Any]
+        ] as [String: Any]
         
         do {
-            let dataToSave = try JSONSerialization.data(withJSONObject: resultData, options: .prettyPrinted)
+            var allResults = [[String: Any]]()
+            // Check if the file exists
             if FileManager.default.fileExists(atPath: filePath.path) {
-                // If the file exists, append new data
-                if let fileHandle = FileHandle(forWritingAtPath: filePath.path) {
-                    fileHandle.seekToEndOfFile()
-                    fileHandle.write(dataToSave)
-                    fileHandle.closeFile()
+                // Read existing data
+                let data = try Data(contentsOf: filePath)
+                if let existingResults = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] {
+                    allResults = existingResults // Load existing data
                 }
-            } else {
-                // If the file does not exist, create it and write data
-                try dataToSave.write(to: filePath, options: .atomic)
             }
+            
+            allResults.append(newResultData)
+            let dataToSave = try JSONSerialization.data(withJSONObject: allResults, options: .prettyPrinted)
+            try dataToSave.write(to: filePath, options: .atomic)
+            
             print("Saved successfully to \(filePath)")
         } catch {
             print("Failed to save results: \(error)")
@@ -193,7 +176,7 @@ class AnswerQuestionsViewController: UIViewController, UITableViewDelegate, UITa
     func finishQuiz() {
         print("Quiz Completed. Score: \(correctAnswers)/\(selectedQuestions.count)")
         saveResults()
-    
+        
         navigationController?.popViewController(animated: true) // go back to QuizAttemptViewController, another user and do the quiz
     }
     
