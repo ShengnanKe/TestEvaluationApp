@@ -212,7 +212,7 @@ extension QuizCreationFormViewController: QuizQuestionCreationCellDelegate {
         if options.count > 2 {
             options.removeLast()
             question["options"] = options
-            // Adjust answer index if necessary
+           
             let answerIndex = (question["answer"] as? Int) ?? -1
             if answerIndex >= options.count {
                 question["answer"] = options.count - 1  // Adjust answer to the last option
@@ -230,20 +230,5 @@ extension QuizCreationFormViewController: QuizQuestionCreationCellDelegate {
         question["answer"] = selectedAnswerIndex //+ 1
         questions[indexPath.row] = question
     }
-    
-//    func textFieldDidEndEditing(_ textField: UITextField, in cell: QuizQuestionCreationTableViewCell) { // 
-//        guard let cell = textField.superview?.superview as? QuizQuestionCreationTableViewCell,
-//              let indexPath = quizCreationTableView.indexPath(for: cell) else {
-//            return
-//        }
-//        let options = cell.optionsStackView.arrangedSubviews.compactMap { ($0 as? UITextField)?.text }
-//        var question = questions[indexPath.row]
-//        question["options"] = options
-//        question["question"] = cell.questionTextField.text ?? ""
-//        
-//        questions[indexPath.row] = question
-//        print("Updated model: \(questions)")
-//    }
-//    
     
 }
