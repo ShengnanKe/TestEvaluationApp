@@ -26,10 +26,14 @@ class QuizHistoryViewController: UIViewController, UITableViewDelegate, UITableV
         quizHistoryTitleLabel.text = "Quiz Attempt History"
         quizHistoryTableView.delegate = self
         quizHistoryTableView.dataSource = self
-        //quizHistoryTableView.separatorColor = .clear
         
         loadQuizData()
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) { // to make sure the updated data is also showing here, new added quiz data
+        super.viewWillAppear(animated)
+        loadQuizData()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -109,7 +113,6 @@ class QuizHistoryViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // Assuming you have a storyboard setup
         if let viewController = storyboard?.instantiateViewController(withIdentifier: "QuizDetailViewController") as? QuizDetailViewController {
             viewController.quizDetails = quizData[indexPath.row]
             navigationController?.pushViewController(viewController, animated: true)

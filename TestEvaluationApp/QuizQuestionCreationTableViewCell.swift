@@ -33,13 +33,11 @@ class QuizQuestionCreationTableViewCell: UITableViewCell, UITextFieldDelegate {
         removeButton.setTitle("Remove Option", for: .normal)
         
         questionTextField.delegate = self
-        setupInitialOptions()
         correctAnswerSegmentedControl.addTarget(self, action: #selector(correctAnswerChanged(_:)), for: .valueChanged)
     }
     
     func configureOptionTextField(_ textField: UITextField) {
         textField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
-        //textField.tag = index
     }
     
     @objc func textFieldEditingChanged(_ textField: UITextField) {
@@ -54,12 +52,6 @@ class QuizQuestionCreationTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     @IBAction func removeOptionPressed(_ sender: UIButton) {
         delegate?.removeOptionPressed(in: self)
-    }
-    
-    func setupInitialOptions() { // is this necessary? check
-        for index in 0..<2 {
-            addOptionField(withText: "Option \(index)")
-        }
     }
     
     func clearOptions() {
@@ -85,20 +77,21 @@ class QuizQuestionCreationTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     func addOptionField(withText text: String = "New Option") {
         let optionTextField = UITextField()
-        optionTextField.placeholder = "Enter option here"
         optionTextField.borderStyle = .roundedRect
         optionTextField.text = text
         optionTextField.delegate = self
-        configureOptionTextField(optionTextField)
         
         optionsStackView.addArrangedSubview(optionTextField)
         
-        correctAnswerSegmentedControl.insertSegment(withTitle: String(optionsStackView.arrangedSubviews.count), at: optionsStackView.arrangedSubviews.count - 1, animated: true)
-        correctAnswerSegmentedControl.selectedSegmentIndex = 0  // Default to the first option as correct
+        optionTextField.tag = optionsStackView.arrangedSubviews.count - 1
+        
+        configureOptionTextField(optionTextField)
+        
+        correctAnswerSegmentedControl.insertSegment(withTitle: String(optionTextField.tag + 1), at: optionTextField.tag, animated: true)
     }
     
     func removeOptionField() {
-        if optionsStackView.arrangedSubviews.count > 2 { // minimum of two options
+        if optionsStackView.arrangedSubviews.count > 2 {
             if let lastView = optionsStackView.arrangedSubviews.last {
                 optionsStackView.removeArrangedSubview(lastView)
                 lastView.removeFromSuperview()

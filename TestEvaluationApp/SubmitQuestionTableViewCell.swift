@@ -10,7 +10,6 @@ import UIKit
 protocol SubmitQuestionTableViewCellDelegate: AnyObject {
     func addNewQuestion()
     func submitQuestion()
-    func showQuestionList()
 }
 
 class SubmitQuestionTableViewCell: UITableViewCell {
@@ -54,11 +53,7 @@ extension QuizCreationFormViewController: SubmitQuestionTableViewCellDelegate {
     
     func submitQuestion() {
         saveQuestionsToFile()
-        // Implement your submission logic
     }
     
-    func showQuestionList() {
-        // Implement logic to show the list of questions
-    }
 }
 

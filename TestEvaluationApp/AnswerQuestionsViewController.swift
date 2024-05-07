@@ -25,10 +25,7 @@ class AnswerQuestionsViewController: UIViewController, UITableViewDelegate, UITa
         quizAttemptTableView.dataSource = self
         quizAttemptTableView.separatorColor = .clear
         
-        quizAttemptTableView.register(OptionsTableViewCell.self, forCellReuseIdentifier: "OptionsCell")
-        
-        //        quizAttemptTableView.register(QuestionTableViewCell.self, forCellReuseIdentifier: "QuestionCell")
-        //        quizAttemptTableView.register(FeedbackTableViewCell.self, forCellReuseIdentifier: "FeedbackCell")
+        quizAttemptTableView.register(OptionsTableViewCell.self, forCellReuseIdentifier: "OptionsCell") // i didn't set up this cell on storyboard -> by programming
         
         loadQuizData()
     }
@@ -154,7 +151,6 @@ class AnswerQuestionsViewController: UIViewController, UITableViewDelegate, UITa
         
         do {
             var allResults = [[String: Any]]()
-            // Check if the file exists
             if FileManager.default.fileExists(atPath: filePath.path) {
                 // Read existing data
                 let data = try Data(contentsOf: filePath)
@@ -166,10 +162,9 @@ class AnswerQuestionsViewController: UIViewController, UITableViewDelegate, UITa
             allResults.append(newResultData)
             let dataToSave = try JSONSerialization.data(withJSONObject: allResults, options: .prettyPrinted)
             try dataToSave.write(to: filePath, options: .atomic)
-            
-            print("Saved successfully to \(filePath)")
+            print("Saved successfully in \(filePath)")
         } catch {
-            print("Failed to save results: \(error)")
+            print("Failed to save results - \(error)")
         }
     }
     

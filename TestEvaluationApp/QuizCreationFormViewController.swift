@@ -14,16 +14,7 @@
  
  use collection view for the options for more flexiablelity
  
- 
- view.endEditing(true) -> for last entry to be saved
- 
- 
-  myTextField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
 
-     @objc func textFieldEditingChanged(_ textField: UITextField) {
-          updateText?(textField.text ?? "")
-      }
- 
  
  */
 
@@ -34,7 +25,7 @@ import UIKit
 
 class QuizCreationFormViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
-    // format to save the entered questions, options, and the correct answer.
+    // save the user input questions, options, and the correct answers.
     var questions: [[String: Any]] = []
     
     @IBOutlet weak var quizCreationTitleLabel: UILabel!
@@ -46,8 +37,6 @@ class QuizCreationFormViewController: UIViewController, UITableViewDelegate, UIT
         quizCreationTableView.dataSource = self
         quizCreationTableView.separatorColor = .clear
         quizCreationTitleLabel.text = "Quiz Questions Creation Form"
-        
-//        quizCreationTableView.register(UINib(nibName: "SubmitQuestionTableViewCell", bundle: nil), forCellReuseIdentifier: "SubmitQuestionCell")
         
         loadQuestionsFromFile()
     }
@@ -66,15 +55,15 @@ class QuizCreationFormViewController: UIViewController, UITableViewDelegate, UIT
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 2 // for new question creation / for buttons
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 { // for users to enter questions, options, correct answer and save all these for disply on the next collection view for user to take the quiz
+        if section == 0 { // for users to enter questions, options, correct answer and save all these for disply on the next table view for user to take the quiz
             return questions.count
         }
         else {
-            return 1 // save button maybe, anything else need?
+            return 1 // save button/ create new question button
         }
     }
     
@@ -98,8 +87,7 @@ class QuizCreationFormViewController: UIViewController, UITableViewDelegate, UIT
             let questionInfo = questions[indexPath.row]
             cell.questionTextField.text = questionInfo["question"] as? String
             cell.questionIndex = indexPath.row // for keey track of questions 
-            //cell.clearOptions() // unsure maybe need to set it up for clear existing options
-            
+    
             cell.textChanged = { [weak self] newText in
                 guard let self = self else { return }
                 self.questions[indexPath.row]["question"] = newText
@@ -192,7 +180,7 @@ class QuizCreationFormViewController: UIViewController, UITableViewDelegate, UIT
             return
         }
         var question = questions[indexPath.row]
-        question["answer"] = sender.selectedSegmentIndex //+ 1 // Store the selected index as the answer
+        question["answer"] = sender.selectedSegmentIndex  // Store the selected index as the answer
         questions[indexPath.row] = question
     }
     
