@@ -90,7 +90,7 @@ class AnswerQuestionsViewController: UIViewController, UITableViewDelegate, UITa
             feedbackCell.isHidden = false
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { // giving some time for user to check the feedback
             self.nextQuestion()
         }
     }
