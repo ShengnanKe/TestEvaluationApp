@@ -110,9 +110,6 @@ class AnswerQuestionsViewController: UIViewController, UITableViewDelegate, UITa
                     self.selectedQuestions[questionIndex]["selectedAnswer"] = selectedAnswer
                     self.checkAnswer(selectedAnswer: selectedAnswer)
                 }
-                //                cell.setupOptions(options: options, questionIndex: currentQuestionIndex) { selectedAnswer in
-                //                    self.checkAnswer(selectedAnswer: selectedAnswer)
-                //                }
             }
             return cell
         case 2:
@@ -120,10 +117,9 @@ class AnswerQuestionsViewController: UIViewController, UITableViewDelegate, UITa
             cell.feedbackLabel.isHidden = true // Initially hide the feedback
             return cell
         default:
-            fatalError("Unexpected indexPath")
+            fatalError("???")
         }
     }
-    
     
     func nextQuestion() {
         if currentQuestionIndex < selectedQuestions.count - 1 {
@@ -180,9 +176,9 @@ class AnswerQuestionsViewController: UIViewController, UITableViewDelegate, UITa
         do {
             let data = try Data(contentsOf: filePath)
             let savedResults = try JSONSerialization.jsonObject(with: data, options: [])
-            print("Saved Results: \(savedResults)")
+            print("Saved Results - \(savedResults)")
         } catch {
-            print("Failed to read saved results: \(error)")
+            print("Failed to read saved results -\(error)")
         }
     }
 }

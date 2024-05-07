@@ -9,7 +9,7 @@ import UIKit
 
 protocol QuizQuestionCreationCellDelegate: AnyObject { //declare delegate
     func correctAnswerChanged(_ cell: QuizQuestionCreationTableViewCell, selectedAnswerIndex: Int)
-    func textFieldDidEndEditing(_ textField: UITextField, in cell: QuizQuestionCreationTableViewCell)
+    //func textFieldDidEndEditing(_ textField: UITextField, in cell: QuizQuestionCreationTableViewCell)
     func addOptionPressed(in cell: QuizQuestionCreationTableViewCell)
     func removeOptionPressed(in cell: QuizQuestionCreationTableViewCell)
 }
@@ -23,7 +23,7 @@ class QuizQuestionCreationTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet weak var correctAnswerSegmentedControl: UISegmentedControl!
     
     weak var delegate: QuizQuestionCreationCellDelegate?
-    var textChanged: ((String) -> Void)? // for saving data
+    var textChanged: ((String) -> Void)? // for saving data -> closure -> VC cellForRowAt -> updating the question
     var questionIndex: Int = 0
     
     override func awakeFromNib() {
@@ -104,17 +104,12 @@ class QuizQuestionCreationTableViewCell: UITableViewCell, UITextFieldDelegate {
         delegate?.correctAnswerChanged(self, selectedAnswerIndex: sender.selectedSegmentIndex)
     }
     
-    override func prepareForReuse() {
+    override func prepareForReuse() { // Resets the cell before reuse
         super.prepareForReuse()
         questionTextField.text = nil
         clearOptions()
         correctAnswerSegmentedControl.selectedSegmentIndex = UISegmentedControl.noSegment
     }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        delegate?.textFieldDidEndEditing(textField, in: self)
-    }
-    
-    
+
 }
 

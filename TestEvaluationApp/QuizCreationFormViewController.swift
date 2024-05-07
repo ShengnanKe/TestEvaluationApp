@@ -31,7 +31,7 @@ class QuizCreationFormViewController: UIViewController, UITableViewDelegate, UIT
     @IBOutlet weak var quizCreationTitleLabel: UILabel!
     @IBOutlet weak var quizCreationTableView: UITableView!
     
-    override func viewDidLoad() {
+    override func viewDidLoad() { // setting things up
         super.viewDidLoad()
         quizCreationTableView.delegate = self
         quizCreationTableView.dataSource = self
@@ -41,16 +41,16 @@ class QuizCreationFormViewController: UIViewController, UITableViewDelegate, UIT
         loadQuestionsFromFile()
     }
     
-    func loadQuestionsFromFile() {
+    func loadQuestionsFromFile() { // to load existing questing
         let filePath = getDocumentsDirectory().appendingPathComponent("quizQuestionsData.txt")
         do {
-            let data = try Data(contentsOf: filePath)
-            if let loadedQuestions = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] {
+            let data = try Data(contentsOf: filePath) // check if there is any pervious added questions
+            if let loadedQuestions = try   JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] {
                 self.questions = loadedQuestions
             }
         } catch {
-            print("Error reading or parsing quiz data: \(error)")
-            questions = [["question": "", "options": [], "answer": -1]]
+            print("no pervious added questions \(error)")
+            questions = [["question": "", "options": [], "answer": -1]] // init one
         }
     }
     
@@ -59,7 +59,7 @@ class QuizCreationFormViewController: UIViewController, UITableViewDelegate, UIT
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 { // for users to enter questions, options, correct answer and save all these for disply on the next table view for user to take the quiz
+        if section == 0 {
             return questions.count
         }
         else {
@@ -84,32 +84,37 @@ class QuizCreationFormViewController: UIViewController, UITableViewDelegate, UIT
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 { // questions, options(stackview) / answer (SegmentedControl)
             let cell = tableView.dequeueReusableCell(withIdentifier: "QuizQuestionCreationCell", for: indexPath) as! QuizQuestionCreationTableViewCell
-            let questionInfo = questions[indexPath.row]
+            let questionInfo = questions[indexPath.row] // get data from curr row index from the question array
+            
+            //questions
             cell.questionTextField.text = questionInfo["question"] as? String
-            cell.questionIndex = indexPath.row // for keey track of questions 
+            cell.questionIndex = indexPath.row // for keey track of questions -> updating
     
-            cell.textChanged = { [weak self] newText in
-                guard let self = self else { return }
+            cell.textChanged = {  //  closure for updating the question text in questions array
+                [weak self] newText in guard let self = self else { return }
                 self.questions[indexPath.row]["question"] = newText
             }
             
+            //options
             cell.configureOptions(options: questionInfo["options"] as? [String] ?? [])
+            
+            // answers
             cell.correctAnswerSegmentedControl.selectedSegmentIndex = questionInfo["answer"] as? Int ?? -1 // defalut to no correct answer
             
-            cell.delegate = self
+            cell.delegate = self // needed, else cannot add options, and update the questions
             return cell
         }
         else { // Submit Question button && add question button
             let cell = tableView.dequeueReusableCell(withIdentifier: "SubmitQuestionCell", for: indexPath) as! SubmitQuestionTableViewCell
             cell.delegate = self
-            cell.submitAction = { [weak self] in
-                self?.saveQuestionsToFile()
+            cell.submitAction = { //  closure for saving file when button being tapped, ensures that saveQuestionsToFile() will only be called if self is not nil
+                [weak self] in self?.saveQuestionsToFile()
             }
             return cell
         }
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) { // to make sure the last options can be saved properly
         guard let cell = textField.superview?.superview as? QuizQuestionCreationTableViewCell,
               let indexPath = quizCreationTableView.indexPath(for: cell) else {
             return
@@ -154,18 +159,17 @@ class QuizCreationFormViewController: UIViewController, UITableViewDelegate, UIT
         questions.append(newQuestion)
         quizCreationTableView.insertRows(at: [IndexPath(row: questions.count - 1, section: 0)], with: .automatic)
         
-    } // need to do tableView.reloadData()
-    // need give flexibablity for how many options that they need, save table and refresh it, black it. reload the textfield. add it the page go down, add question, attemp quiz, history
+    }
     
     func saveQuestionsToFile() {
-        print("Final questions before saving: \(questions)") // -> to check what's in the questions dict()
+        print("questions: \(questions)") // -> to check what's in the questions dict() first
         let filePath = getDocumentsDirectory().appendingPathComponent("quizQuestionsData.txt")
         do {
             let data = try JSONSerialization.data(withJSONObject: questions, options: .prettyPrinted)
             try data.write(to: filePath)
-            print("Saved successfully to \(filePath)")
+            print(" data Saved in \(filePath)")
         } catch {
-            print("Failed to save data: \(error)")
+            print("Failed - \(error)")
         }
     }
 
@@ -199,7 +203,6 @@ extension QuizCreationFormViewController: QuizQuestionCreationCellDelegate {
         question["options"] = options
         questions[indexPath.row] = question
         quizCreationTableView.reloadRows(at: [indexPath], with: .automatic)
-//        view.endEditing(true)
     }
     
     func removeOptionPressed(in cell: QuizQuestionCreationTableViewCell) {
@@ -219,7 +222,7 @@ extension QuizCreationFormViewController: QuizQuestionCreationCellDelegate {
         }
     }
     
-    func correctAnswerChanged(_ cell: QuizQuestionCreationTableViewCell, selectedAnswerIndex: Int) {
+    func correctAnswerChanged(_ cell: QuizQuestionCreationTableViewCell, selectedAnswerIndex: Int) { // the correct answer changed and make sure it updates the value accordingly
         guard let indexPath = quizCreationTableView.indexPath(for: cell) else {
             return
         }
@@ -228,19 +231,19 @@ extension QuizCreationFormViewController: QuizQuestionCreationCellDelegate {
         questions[indexPath.row] = question
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField, in cell: QuizQuestionCreationTableViewCell) {
-        guard let cell = textField.superview?.superview as? QuizQuestionCreationTableViewCell,
-              let indexPath = quizCreationTableView.indexPath(for: cell) else {
-            return
-        }
-        let options = cell.optionsStackView.arrangedSubviews.compactMap { ($0 as? UITextField)?.text }
-        var question = questions[indexPath.row]
-        question["options"] = options
-        question["question"] = cell.questionTextField.text ?? ""
-        
-        questions[indexPath.row] = question
-        print("Updated model: \(questions)")
-    }
-    
+//    func textFieldDidEndEditing(_ textField: UITextField, in cell: QuizQuestionCreationTableViewCell) { // 
+//        guard let cell = textField.superview?.superview as? QuizQuestionCreationTableViewCell,
+//              let indexPath = quizCreationTableView.indexPath(for: cell) else {
+//            return
+//        }
+//        let options = cell.optionsStackView.arrangedSubviews.compactMap { ($0 as? UITextField)?.text }
+//        var question = questions[indexPath.row]
+//        question["options"] = options
+//        question["question"] = cell.questionTextField.text ?? ""
+//        
+//        questions[indexPath.row] = question
+//        print("Updated model: \(questions)")
+//    }
+//    
     
 }

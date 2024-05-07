@@ -10,7 +10,7 @@ import UIKit
 class OptionsTableViewCell: UITableViewCell {
     
     var optionButtons: [UIButton] = []
-    var onOptionSelected: ((Int, Int) -> Void)? // Updated to pass questionIndex too
+    var onOptionSelected: ((Int, Int) -> Void)? // -> identify which option, in which question questionIndex 
     
     func setupOptions(options: [String], questionIndex: Int, onOptionSelected: @escaping (Int, Int) -> Void) {
         self.onOptionSelected = onOptionSelected
