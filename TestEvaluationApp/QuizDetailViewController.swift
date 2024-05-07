@@ -16,11 +16,11 @@ class QuizDetailViewController: UIViewController {
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var detailTextView: UITextView!  // Assuming you're using a UITextView to display questions and answers
+    @IBOutlet weak var detailTextView: UITextView!  // -> for showing questions and answers data
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        quizDetailPageLabel.text = "Quiz Detail Page"
+        quizDetailPageLabel.text = "Quiz Details"
         displayQuizDetails()
     }
     
